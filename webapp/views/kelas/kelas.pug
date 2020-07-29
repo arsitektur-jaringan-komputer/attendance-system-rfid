@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+    .container
+        if errors
+            ul
+            each val in errors
+                li(class="alert alert-danger")= val.msg
+
+        table(class="table table-striped")
+            thead.thead-dark
+                tr
+                    th(scope="col") ID
+                    th(scope="col") Nama Kelas
+                    th(scope="col") Ruang
+                    th(scope="col") Hari
+                    th(scope="col") Jam Mulai
+                    th(scope="col") Jam Selesai
+                    th(scope="col") 
+            tbody
+                form(method="POST", action="/kelas/tambah" class="form-group")
+                    tr
+                        td &nbsp
+                        td
+                            input(type="text", name="nama", placeholder="Nama Kelas", class="form-control")
+                        td
+                            input(type="text", name="ruang", placeholder="Ruang", class="form-control")
+                        td
+                            input(type="text", name="jadwal_hari", placeholder="Hari(1-7)", class="form-control")
+                        td
+                            input(type="text", name="jam_mulai", placeholder="Jam Mulai(HH:MM:SS)", class="form-control")
+                        td
+                            input(type="text", name="jam_selesai", placeholder="Jam Selesai(HH:MM:SS)", class="form-control")
+                        td
+                            button(type="submit" class="btn btn-primary") add
+                if list
+                    each val in list
+                        tr
+                            th(scope="row")=val.id
+                            td
+                                a(href='/kelas/detail/'+val.id)=val.nama_kelas
+                            td=val.ruang
+                            td=val.jadwal_hari
+                            td=val.jam_mulai
+                            td=val.jam_selesai
+                            td
+                                .btn-group(role='group', aria-label='Basic example')
+                                    a(href='/kelas/edit/'+val.id)
+                                        button.btn.btn-primary(type='button') edit
+                                    a(href='/kelas/delete/'+val.id)
+                                        button.btn.btn-danger(type='button') delete
